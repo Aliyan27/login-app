@@ -1,1 +1,73 @@
-<p>login works!</p>
+<div class="login-wrapper">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <p-card class="login-card shadow-4">
+      
+      <div class="text-center mb-5">
+        <h2 class="text-900 text-3xl font-medium mb-2">Welcome Back</h2>
+        <span class="text-600 font-medium">Please enter your credentials</span>
+      </div>
+
+      <div class="field mb-4">
+        <label for="email" class="block text-900 font-medium mb-2">Email</label>
+        <input
+          id="email"
+          pInputText
+          formControlName="email"
+          type="email"
+          class="w-full"
+          [class.ng-invalid]="f.email.invalid && f.email.touched"
+          [class.ng-dirty]="f.email.touched"
+        />
+        
+        @if (f.email.invalid && f.email.touched) {
+          <div class="mt-1">
+            @if (f.email.errors?.['required']) {
+              <small class="p-error">Email is required.</small>
+            } @else if (f.email.errors?.['email']) {
+              <small class="p-error">Enter a valid email address.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="field mb-4">
+        <label for="password" class="block text-900 font-medium mb-2">Password</label>
+        <p-password
+          id="password"
+          formControlName="password"
+          [toggleMask]="true"
+          [feedback]="false"
+          inputStyleClass="w-full"
+          [class.ng-invalid]="f.password.invalid && f.password.touched"
+          [class.ng-dirty]="f.password.touched">
+        </p-password>
+
+        @if (f.password.invalid && f.password.touched) {
+          <div class="mt-1">
+            @if (f.password.errors?.['required']) {
+              <small class="p-error">Password is required.</small>
+            } @else if (f.password.errors?.['minlength']) {
+              <small class="p-error">Minimum 6 characters required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="flex align-items-center justify-content-between mb-5">
+        <p-checkbox formControlName="rememberMe" binary="true" label="Remember me"></p-checkbox>
+        <a class="font-medium no-underline text-blue-500 cursor-pointer">Forgot password?</a>
+      </div>
+
+      <button
+        pButton
+        pRipple
+        type="submit"
+        [label]="isLoading() ? 'Connecting...' : 'Log In'"
+        [icon]="isLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'"
+        [disabled]="isLoading()"
+        class="w-full p-3 text-xl">
+      </button>
+
+    </p-card>
+  </form>
+</div>

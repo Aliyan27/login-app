@@ -1,0 +1,22 @@
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--surface-ground);
+  padding: 1.5rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 12px;
+}
+:host ::ng-deep .p-password input {
+  width: 100%;
+}
+
+.p-error {
+  font-size: 0.875rem;
+  display: block;
+}
