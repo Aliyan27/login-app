@@ -1,34 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { ToggleButtonModule } from 'primeng/togglebutton';
+import { Component } from '@angular/core';
+import {RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    ReactiveFormsModule,
-    InputTextModule,
-    PasswordModule,
-    ToggleButtonModule,
-    ButtonModule
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
-export class App {
-  protected readonly title = signal('login-page');
-
-  readonly loginForm = inject(FormBuilder).nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-    rememberMe: [false]
-  });
-
-  onSubmit() {
-    if (this.loginForm.invalid) return;
-    // placeholder: wire up auth later
-    console.log('Login submit', this.loginForm.getRawValue());
-  }
-}
+export class App {}

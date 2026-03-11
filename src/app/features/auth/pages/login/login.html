@@ -1,7 +1,6 @@
 <div class="login-wrapper">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <p-card class="login-card shadow-4">
-      
       <div class="text-center mb-5">
         <h2 class="text-900 text-3xl font-medium mb-2">Welcome Back</h2>
         <span class="text-600 font-medium">Please enter your credentials</span>
@@ -18,7 +17,7 @@
           [class.ng-invalid]="f.email.invalid && f.email.touched"
           [class.ng-dirty]="f.email.touched"
         />
-        
+
         @if (f.email.invalid && f.email.touched) {
           <div class="mt-1">
             @if (f.email.errors?.['required']) {
@@ -39,7 +38,8 @@
           [feedback]="false"
           inputStyleClass="w-full"
           [class.ng-invalid]="f.password.invalid && f.password.touched"
-          [class.ng-dirty]="f.password.touched">
+          [class.ng-dirty]="f.password.touched"
+        >
         </p-password>
 
         @if (f.password.invalid && f.password.touched) {
@@ -65,9 +65,14 @@
         [label]="isLoading() ? 'Connecting...' : 'Log In'"
         [icon]="isLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'"
         [disabled]="isLoading()"
-        class="w-full p-3 text-xl">
-      </button>
-
+        class="w-full p-3 text-xl"
+      ></button>
+             
+          <div class="mt-1">
+            @if (errorMessage().length > 0) {
+              <small class="p-error">{{ errorMessage() }}</small>
+            }
+          </div>
     </p-card>
   </form>
 </div>

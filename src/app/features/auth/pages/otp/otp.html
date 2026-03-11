@@ -1,1 +1,44 @@
-<p>otp works!</p>
+<div class="card flex justify-center">
+  <form [formGroup]="otpForm" (ngSubmit)="onVerify()" class="flex flex-col items-center">
+    <div class="font-bold text-xl mb-2">Authenticate Your Account</div>
+    <p class="text-muted-color block mb-8">Please enter the code sent to your phone.</p>
+
+    @if (errorMessage()) {
+      <div class="p-error mb-4">{{ errorMessage() }}</div>
+    }
+
+    <p-inputOtp formControlName="deviceId" [length]="6">
+      <ng-template pTemplate="input" let-token let-events="events" let-index="index">
+        <input
+          type="text"
+          [maxLength]="1"
+          (input)="events.input($event)"
+          (keydown)="events.keydown($event)"
+          [attr.value]="token"
+          class="custom-otp-input"
+          [ngClass]="{ 'ng-invalid ng-dirty': f.deviceId.touched && f.deviceId.invalid }"
+        />
+        @if (index < 5) {
+          <div class="flex items-center px-4">
+            <i class="pi pi-minus"></i>
+          </div>
+        }
+      </ng-template>
+    </p-inputOtp>
+
+    <div class="flex justify-between mt-8 self-stretch">
+      <p-button label="Resend Code" [link]="true" type="button" class="p-0" />
+      <p-button
+        label="Submit Code"
+        type="submit"
+        [loading]="isLoading()"
+        [disabled]="otpForm.invalid"
+      />
+    </div>
+    <div class="mt-1">
+      @if (errorMessage().length > 0) {
+        <small class="p-error">{{ errorMessage() }}</small>
+      }
+    </div>
+  </form>
+</div>
