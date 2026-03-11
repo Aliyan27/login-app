@@ -1,6 +1,38 @@
-<style></style>
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2 class="title">Login</h2>
 
-<main class="main">
-</main>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" pInputText formControlName="email" placeholder="Enter your email" />
+      </div>
 
-<router-outlet />
+      <div class="field">
+        <label>Password</label>
+        <p-password
+          formControlName="password"
+          [feedback]="false"
+          placeholder="Enter your password"
+          [toggleMask]="true"
+          styleClass="w-100"
+          inputStyleClass="w-100"
+        ></p-password>
+      </div>
+
+      <div class="remember-row">
+        <p-toggleButton
+          formControlName="rememberMe"
+          onLabel="Remembered"
+          offLabel="Remember Me"
+          onIcon="pi pi-check"
+          offIcon="pi pi-user"
+        ></p-toggleButton>
+      </div>
+
+      <button pButton type="submit" label="Login" icon="pi pi-sign-in" class="login-btn">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
