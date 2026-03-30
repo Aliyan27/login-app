@@ -1,1 +1,94 @@
-<p>home works!</p>
+<div class="card p-4 shadow-2 border-round">
+  <div class="flex justify-content-between align-items-center mb-4">
+    <h2 class="m-0 font-semibold text-900">Inventory Management</h2>
+  </div>
+
+  <!-- FORM -->
+  <form [formGroup]="homeForm">
+    <div class="flex flex-column gap-2 mb-4">
+      <label for="cat-select" class="font-bold">Select Category <span class="text-red-500">*</span></label>
+
+      <!-- ✅ FIX: Use proper p-select binding -->
+      <p-select
+        id="cat-select"
+        formControlName="category"
+        [options]="categories"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select a Category"
+        class="w-full md:w-20rem"
+        [showClear]="true"
+        [filter]="true"
+      ></p-select>
+
+      <!-- ✅ FIX: Better validation check -->
+      @if (homeForm.get('category')?.hasError('required') && homeForm.get('category')?.touched) {
+        <small class="p-error">
+          <i class="pi pi-exclamation-circle"></i> Please select a category.
+        </small>
+      }
+    </div>
+
+    <!-- Submit Button -->
+  </form>
+
+  <!-- DEBUG (Optional - remove in production) -->
+  <div class="mt-4 p-3 bg-blue-50 border-round border-blue-200 border-1">
+    <strong>Debug Info:</strong>
+    <pre class="m-2">{{ homeForm.value | json }}</pre>
+  </div>
+
+  <!-- DRAWER -->
+  <!-- ✅ FIX: Use signal syntax [(visible)]="drawerVisible()" -->
+  <p-drawer 
+    [visible]="drawerVisible()" 
+    (visibleChange)="drawerVisible.set($event)"
+    position="right" 
+    header="Project Settings"
+    [modal]="true"
+    [closeOnEscape]="true"
+  >
+    <div class="flex flex-column gap-4 p-2">
+
+      <!-- ✅ FIX: Proper null check with safe navigation -->
+      @if (isCategorySelected()) {
+        <div class="flex flex-column gap-2">
+          <label class="font-bold text-lg">
+            {{ getSelectedCategory()?.projectName }}
+          </label>
+
+          <small class="text-gray-500">
+            Project ID: {{ getSelectedCategory()?.id }}
+          </small>
+
+          <input 
+            pInputText 
+            placeholder="Enter project name"
+            class="mt-2"
+          />
+        </div>
+
+        <!-- Save Button -->
+        <p-button
+          label="Save All Changes"
+          icon="pi pi-save"
+          class="w-full"
+          severity="success"
+        ></p-button>
+
+        <!-- Cancel Button -->
+        <p-button
+          label="Cancel"
+          icon="pi pi-times"
+          class="w-full"
+          severity="secondary"
+          (onClick)="drawerVisible.set(false)"
+        ></p-button>
+      } @else {
+        <p class="text-center text-gray-500">
+          <i class="pi pi-inbox"></i> No category selected
+        </p>
+      }
+    </div>
+  </p-drawer>
+</div>

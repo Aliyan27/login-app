@@ -50,6 +50,11 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
+      // Test error for Sentry - throws when email is 'test@sentry.com'
+      if (this.loginForm.value.email === 'test@sentry.com') {
+        throw new Error('Sentry test error: This is a deliberate error to test error tracking in the login screen');
+      }
+      
       this.isLoading.set(true);
       this.api.post(endpoints.auth.login, this.loginForm.getRawValue()).subscribe({
         next: (response: any) => {

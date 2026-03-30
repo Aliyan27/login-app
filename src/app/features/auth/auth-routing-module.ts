@@ -6,7 +6,6 @@ import { Otp } from './pages/otp/otp';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {path: 'otp', component:Otp },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 

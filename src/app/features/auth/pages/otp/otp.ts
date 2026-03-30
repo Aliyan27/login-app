@@ -57,8 +57,9 @@ export class Otp implements OnInit {
       this.api.post<Iverify2fa>(endpoints.auth.verify2fa, payload).subscribe({
         next: (response: Iverify2fa) => {
              if(response.status===200 && response.data.tokenDto.accessToken) {
+              
               localStorage.setItem('accessToken', response.data.tokenDto.accessToken);
-              this.router.navigate(['/home']);
+              this.router.navigate(['/']);
             }else if(!response.success) {
               this.errorMessage.set(response.message);
             }
